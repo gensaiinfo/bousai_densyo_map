@@ -13,8 +13,17 @@ body{
   min-height: 100%;
 }
 
-// .map-area{
-//   fill: #18c224;
-//   fill-opacity: 0.8;
-//   stroke: #2d5e06;
-// }
+.geo-feature {
+  stroke-width:1;
+  &.prefs {
+    fill: #18c224;
+    fill-opacity: 0.3;
+    stroke: #2d5e06;
+  }
+
+  &.towns {
+    fill: #2d5e06;
+    fill-opacity: 0.4;
+    stroke: #2d5e06;
+  }
+}

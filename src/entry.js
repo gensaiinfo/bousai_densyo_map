@@ -17,37 +17,61 @@ L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
 .addTo(map);
 map.setView([35.3622222, 138.7313889], 5);
 
-const json_file = './japan.topojson'
-d3.json(json_file,function(japan){
-  japan = topojson.feature(japan, japan.objects.japan)
-  var option={
-    radius: 8,
-    color: "#7dd9f1",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.3,
-    className: "map-area"
+const saigai_densyo = './saigai_densyo.json'
+const japanTopojson = './japan.topojson'
+const japanPrefsTopojson = './japan_prefs.topojson'
+const defaultOption = {
+  radius: 8,
+  weight: 1,
+  opacity: 1
+}
+
+d3.json(saigai_densyo, function(densyo){
+  // console.log(densyo) TODO あとで削除
+
+  /**
+   * 表示フィルタ。伝承のある自治体のみ表示する
+   * @param  [GeoJSON] feature GeoJSONオブジェクト
+   * @param  [ILayer] layer  レイヤーオブジェクト
+   * @return [Boolean] 伝承がある場合true。それ以外 false
+   */
+  function filter(feature, layer){
+    var code6 = feature.properties.code6;
+    return densyo[code6] != undefined;
   }
-  function style(feature){
-    var prop = feature.properties;
-    if(/.+市$/.test(prop.name)){
-      option.fillColor="#3a94ac"
-    } else if(/.+町$/.test(prop.name)){
-      option.fillColor="#f1f07d"
-    } else if(/.+村$/.test(prop.name)){
-      option.fillColor="#a9f17d"
-    } else{
-      option.fillColor="#000000"
+
+  d3.json(japanPrefsTopojson, function(prefs){
+    prefs = topojson.feature(prefs, prefs.objects.japan)
+    function style(feature){
+      var opt = Object.create(defaultOption)
+      opt.className= "geo-feature prefs"
+      return opt;
     }
-    return option
-  }
-  function onEachFeature(feature, layer) {
-    var prop = feature.properties;
-    if (prop && prop.name) {
-        layer.bindPopup("["+prop.code6+"] "+prop.pref+" "+prop.name);
+    function onEachFeature(feature, layer){
+      var prop = feature.properties;
+      if (prop && prop.name) {
+          layer.bindPopup("["+prop.code6+"] "+prop.pref);
+      }
+      layer.id = prop.code
     }
-    layer.id = prop.code
-  }
-  // leafletを使ってgeojsonレイヤーを表示する
-  var myLayer = L.geoJson(japan, {style:style, onEachFeature:onEachFeature}).addTo(map);
+    var prefsLayer = L.geoJson(prefs, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
+  });
+
+  d3.json(japanTopojson,function(japan){
+    japan = topojson.feature(japan, japan.objects.japan)
+    function style(feature){
+      var opt = Object.create(defaultOption)
+      opt.className= "geo-feature towns"
+      return opt
+    }
+    function onEachFeature(feature, layer) {
+      var prop = feature.properties;
+      if (prop && prop.name) {
+          layer.bindPopup("["+prop.code6+"] "+prop.pref+" "+prop.name);
+      }
+      layer.id = prop.code
+    }
+    // leafletを使ってgeojsonレイヤーを表示する
+    var myLayer = L.geoJson(japan, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
+  });
 });
