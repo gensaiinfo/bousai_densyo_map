@@ -36,7 +36,7 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin()  // minify
   ],
   devServer: {
-    contentBase: __dirname + "/doc",
+    contentBase: __dirname + "/docs",
     compress: true,
     port: 9000
   }
