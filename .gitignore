@@ -1,6 +1,4 @@
 .DS_Store
 node_modules/
-/doc/*
-!/doc/*.html
-!/doc/*.topojson
-!/doc/*.json
+/doc/*.map
+/doc/images

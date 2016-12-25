@@ -1,13 +1,14 @@
 {
-  "name": "bousai_densyo",
+  "name": "saigai_densyo_map",
   "version": "1.0.0",
-  "description": "防災に関わる「言い伝え」",
+  "description": "災害に関わる「言い伝え」",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "webpack-dev-server --hot --inline",
     "browser": "wait-on http://localhost:9000 && opener http://localhost:9000",
-    "start": "npm-run-all -p server browser"
+    "start": "npm-run-all -p server browser",
+    "genDataJson": "node lib/util.js"
   },
   "author": "HeRoMo",
   "license": "ISC",
