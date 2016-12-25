@@ -28,9 +28,17 @@ body{
   height: 100%;
   margin: 0 10px 0 10px;
 }
-
-h1,h2{
-  margin: 5px 0 0 0;
+h1 {
+  margin: 10px 0 0 0;
+  font-size: 150%;
+}
+h2 {
+  margin: 10px 0 5px 0;
+  font-size: 130%;
+}
+p {
+  font-size: 90%;
+  margin: 1px 0 0 0;
 }
 
 #densyo{
