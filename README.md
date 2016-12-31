@@ -4,7 +4,7 @@
 そのような災害にまつわる資料や情報が[全国災害伝承情報：総務省消防庁](http://www.fdma.go.jp/html/life/saigai_densyo/) として公開されており、本作はそれを元に
 日本各地に伝わる災害に関する言い伝えを地図上にマッピングしています。
 
-[防災に関わる「言い伝え」MAP](https://gensaiinfo.github.io/saigai_densyo_map/)
+[防災に関わる「言い伝え」MAP](https://gensaiinfo.github.io/bousai_densyo_map/)
 
 ## 出典
 本作は [全国災害伝承情報：総務省消防庁](http://www.fdma.go.jp/html/life/saigai_densyo/) で公開されている次の資料を利用しています。
