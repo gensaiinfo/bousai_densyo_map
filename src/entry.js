@@ -15,7 +15,6 @@ L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
 const saigai_densyo = './saigai_densyo.json'
 const japanTopojson = './japan.topojson'
 const japanPrefsTopojson = './japan_prefs.topojson'
-const defaultOption = {}
 
 d3.json(saigai_densyo, function(densyo){
   const nameDisp = document.querySelector('#name') // 自治体名表示エリア
@@ -74,23 +73,14 @@ d3.json(saigai_densyo, function(densyo){
   // 都道府県の描画
   d3.json(japanPrefsTopojson, function(prefs){
     prefs = topojson.feature(prefs, prefs.objects.japan)
-    function style(feature){
-      let opt = Object.create(defaultOption)
-      opt.className= "geo-feature prefs"
-      return opt;
-    }
+    const style = {className: "geo-feature prefs"};
     const prefsLayer = L.geoJson(prefs, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
   });
 
   // 市区町村の描画
-  d3.json(japanTopojson,function(japan){
-    japan = topojson.feature(japan, japan.objects.japan)
-    function style(feature){
-      let opt = Object.create(defaultOption)
-      opt.className= "geo-feature towns"
-      return opt
-    }
-    // leafletを使ってgeojsonレイヤーを表示する
-    const townsLayer = L.geoJson(japan, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
+  d3.json(japanTopojson,function(towns){
+    towns = topojson.feature(towns, towns.objects.japan)
+    const style = {className: "geo-feature towns"}
+    const townsLayer = L.geoJson(towns, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
   });
 });
