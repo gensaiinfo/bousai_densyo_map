@@ -1,9 +1,6 @@
 'use strict'
 
 import "leaflet_css";
-// import "leaflet_marker";
-// import "leaflet_marker_2x";
-// import "leaflet_marker_shadow";
 import "./index.scss";
 
 import L from 'leaflet';
@@ -35,12 +32,12 @@ d3.json(saigai_densyo, function(densyo){
     const data = densyo[code6]
     data.forEach(function(d){
       const dt = document.createElement('dt');
-      const txt = d.old_name ? '[旧 '+d.old_name+'] ' :''
+      const txt = d.old_name ? `[旧 ${d.old_name}] ` :''
       dt.textContent = txt + d.description
       dlist.appendChild(dt)
 
       const dd = document.createElement('dd');
-      const src = (d.source!='')? '<br><span class="src">('+d.source+')</span>': ''
+      const src = (d.source!='')? `<div class="src">(${d.source})</div>`: ''
       dd.innerHTML = d.meaning+ src;
       dlist.appendChild(dd);
     });
@@ -64,8 +61,8 @@ d3.json(saigai_densyo, function(densyo){
   function onEachFeature(feature, layer){
     const prop = feature.properties;
     if (prop && prop.name) {
-      let name = "["+prop.code6+"] "+prop.pref;
-      if(prop.pref != prop.name) name = name +" "+prop.name;
+      let name = `[${prop.code6}] ${prop.pref}`
+      if(prop.pref != prop.name) name = `${name} ${prop.name}`;
       layer.bindPopup(name);
       layer.on('click', function(){
         disp(prop.code6, name)
