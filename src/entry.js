@@ -16,20 +16,90 @@ const saigai_densyo = './saigai_densyo.json'
 const japanTopojson = './japan.topojson'
 const japanPrefsTopojson = './japan_prefs.topojson'
 
-d3.json(saigai_densyo, function(densyo){
-  const nameDisp = document.querySelector('#name') // 自治体名表示エリア
-  const dlist = document.querySelector('#densyo>dl') //伝承表示エリア
+new Promise((resolve, reject)=>{
+  d3.json(saigai_densyo, (densyo)=>{
+    const disp = dispFunc(densyo)
+    resolve({
+      filter: filterFunc(densyo),
+      onEachFeature: onEachFeatureFunc(disp)
+    })
+  })
+}).then((funcs)=>{
+  Promise.all([
+    // 都道府県の描画
+    showMap(japanPrefsTopojson,
+      {className: "geo-feature prefs"},
+      funcs.onEachFeature, funcs.filter),
+    // 市区町村の描画
+    showMap(japanTopojson,
+      {className: "geo-feature towns"},
+      funcs.onEachFeature, funcs.filter)
+  ]).then((layers)=>{
+    for (let layer of layers){ layer.addTo(map) }
+  })
+});
 
+/**
+ * filter 関数を返す高階関数
+ * @param  [Object] densyo 伝承情報のJsonオブジェクト
+ * @return [Function] filter関数
+ */
+function filterFunc(densyo){
+  /**
+   * 表示フィルタ。伝承のある自治体のみ表示する
+   * @param  [GeoJSON] feature GeoJSONオブジェクト
+   * @param  [ILayer] layer  レイヤーオブジェクト
+   * @return [Boolean] 伝承がある場合true。それ以外 false
+   */
+  return (feature, layer)=>{
+    var code6 = feature.properties.code6;
+    return densyo[code6] != undefined;
+  }
+}
+
+/**
+ * onEachFeature関数を返す高階関数
+ * @param  [Funciton] disp 伝承表示エリアを書き換える関数
+ * @return [Funciton] onEachFeature関数
+ */
+function onEachFeatureFunc(disp){
+  /**
+   * 各自治体レイヤー毎の処理。ポップアップとクリックイベントをセットする
+   * @param  [GeoJSON] feature GeoJSONオブジェクト
+   * @param  [ILayer] layer  レイヤーオブジェクト
+   */
+  return (feature, layer)=>{
+    const prop = feature.properties;
+    if (prop && prop.name) {
+      let name = `[${prop.code6}] ${prop.pref}`
+      if(prop.pref != prop.name) name = `${name} ${prop.name}`;
+      layer.bindPopup(name);
+      layer.on('click', ()=>{
+        disp(prop.code6, name)
+      })
+    }
+    layer.id = prop.code6
+  }
+}
+
+/**
+ * disp関数を返す高階関数
+ * @param  [Object] densyo 伝承情報のJsonオブジェクト
+ * @return [Function]  disp関数
+ */
+function dispFunc(densyo){
   /**
    * 右サイドペインに伝承一覧を表示する
    * @param  [String] code6 6桁自治体コード
    * @param  [String] name  自治体名（都道府県名＋市区町村名）
    */
-  function disp(code6, name){
+  return (code6, name)=>{
+    const nameDisp = document.querySelector('#name') // 自治体名表示エリア
+    const dlist = document.querySelector('#densyo>dl') //伝承表示エリア
     dlist.innerText = '';
     nameDisp.innerText = name;
     const data = densyo[code6]
-    data.forEach(function(d){
+    for(let d of data) {
       const dt = document.createElement('dt');
       const txt = d.old_name ? `[旧 ${d.old_name}] ` :''
       dt.textContent = txt + d.description
@@ -39,51 +109,9 @@ d3.json(saigai_densyo, function(densyo){
       const src = (d.source!='')? `<div class="src">(${d.source})</div>`: ''
       dd.innerHTML = d.meaning+ src;
       dlist.appendChild(dd);
-    });
-  }
-  /**
-   * 表示フィルタ。伝承のある自治体のみ表示する
-   * @param  [GeoJSON] feature GeoJSONオブジェクト
-   * @param  [ILayer] layer  レイヤーオブジェクト
-   * @return [Boolean] 伝承がある場合true。それ以外 false
-   */
-  function filter(feature, layer){
-    var code6 = feature.properties.code6;
-    return densyo[code6] != undefined;
-  }
-
-  /**
-   * 各自治体レイヤー毎の処理。ポップアップとクリックイベントをセットする
-   * @param  [GeoJSON] feature GeoJSONオブジェクト
-   * @param  [ILayer] layer  レイヤーオブジェクト
-   */
-  function onEachFeature(feature, layer){
-    const prop = feature.properties;
-    if (prop && prop.name) {
-      let name = `[${prop.code6}] ${prop.pref}`
-      if(prop.pref != prop.name) name = `${name} ${prop.name}`;
-      layer.bindPopup(name);
-      layer.on('click', function(){
-        disp(prop.code6, name)
-      })
     }
-    layer.id = prop.code6
   }
-
-  Promise.all([
-    // 都道府県の描画
-    showMap(japanPrefsTopojson,
-      {className: "geo-feature prefs"},
-      onEachFeature, filter),
-    // 市区町村の描画
-    showMap(japanTopojson,
-      {className: "geo-feature towns"},
-      onEachFeature, filter)
-  ]).then((layers)=>{
-    for (let layer of layers){ layer.addTo(map) }
-  })
-});
-
+}
 /**
  * Topojson の地図を描画する
  * @param  [String] jsonFile topojson file url
