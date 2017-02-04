@@ -70,17 +70,35 @@ d3.json(saigai_densyo, function(densyo){
     layer.id = prop.code6
   }
 
-  // 都道府県の描画
-  d3.json(japanPrefsTopojson, function(prefs){
-    prefs = topojson.feature(prefs, prefs.objects.japan)
-    const style = {className: "geo-feature prefs"};
-    const prefsLayer = L.geoJson(prefs, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
-  });
-
-  // 市区町村の描画
-  d3.json(japanTopojson,function(towns){
-    towns = topojson.feature(towns, towns.objects.japan)
-    const style = {className: "geo-feature towns"}
-    const townsLayer = L.geoJson(towns, {style:style, onEachFeature:onEachFeature, filter: filter}).addTo(map);
-  });
+  Promise.all([
+    // 都道府県の描画
+    showMap(japanPrefsTopojson,
+      {className: "geo-feature prefs"},
+      onEachFeature, filter),
+    // 市区町村の描画
+    showMap(japanTopojson,
+      {className: "geo-feature towns"},
+      onEachFeature, filter)
+  ]).then((layers)=>{
+    for (let layer of layers){ layer.addTo(map) }
+  })
 });
+
+/**
+ * Topojson の地図を描画する
+ * @param  [String] jsonFile topojson file url
+ * @param  [Object|Function] style style object or function
+ * @param  [Function] onEachFeature onEachFeature function
+ * @param  [Function] filter filer function
+ * @return [Promise] resolve に leaflet layer オブジェクトを渡す
+ */
+function showMap(jsonFile, style, onEachFeature, filter){
+  return new Promise((resolve, reject)=>{
+    d3.json(jsonFile, (topo)=>{
+      const layer = L.geoJson(
+        topojson.feature(topo, topo.objects.japan),
+        {style:style, onEachFeature:onEachFeature, filter: filter})
+      resolve(layer)
+    })
+  })
+}
