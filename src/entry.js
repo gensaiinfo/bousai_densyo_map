@@ -13,9 +13,9 @@ L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
   attribution: "©<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors | 「国土交通省国土政策局「国土数値情報（行政区域データ）」をもとに加工」"
 }).addTo(map);
 
-const saigai_densyo = './saigai_densyo.json'
-const japanTopojson = './japan.topojson'
-const japanPrefsTopojson = './japan_prefs.topojson'
+const saigai_densyo = './jsons/saigai_densyo.json'
+const japanTopojson = './jsons/japan.topojson'
+const japanPrefsTopojson = './jsons/japan_prefs.topojson'
 
 new Promise((resolve, reject)=>{
   d3.json(saigai_densyo, (densyo)=>{
