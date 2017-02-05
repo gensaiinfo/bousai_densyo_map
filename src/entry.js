@@ -1,5 +1,6 @@
 'use strict'
 
+import "font_awesome_css"
 import "leaflet_css";
 import "./index.scss";
 

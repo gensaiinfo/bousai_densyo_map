@@ -19,7 +19,8 @@ module.exports = {
       {test: /\.html$/, loader: "file-loader?name=[path][name].[ext]" },
       {test: /\.css$/, loader: ["style-loader","css-loader"]},
       {test: /\.scss$/, loader: ["style-loader","css-loader","sass-loader"]},
-      {test: /\.(png|jpg)$/, loader: "file-loader?name=images/[name].[ext]"}
+      {test: /\.(png|jpg)$/, loader: "file-loader?name=images/[name].[ext]"},
+      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?name=fonts/[name].[ext]"}
     ]
   },
   resolve:{
@@ -28,7 +29,8 @@ module.exports = {
       leaflet_marker: __dirname + "/node_modules/leaflet/dist/images/marker-icon.png",
       leaflet_marker_2x: __dirname + "/node_modules/leaflet/dist/images/marker-icon-2x.png",
       leaflet_marker_shadow: __dirname + "/node_modules/leaflet/dist/images/marker-shadow.png",
-      leaflet_css: __dirname + "/node_modules/leaflet/dist/leaflet.css"
+      leaflet_css: __dirname + "/node_modules/leaflet/dist/leaflet.css",
+      font_awesome_css: __dirname + "/node_modules/font-awesome/css/font-awesome.css",
     }
   },
   devtool: "source-map",
