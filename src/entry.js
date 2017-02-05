@@ -11,7 +11,7 @@ const homePosition = {center:[35.3622222, 138.7313889],zoom:5,minZoom:5, maxZoom
 const map = L.map('map', homePosition);
 
 L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
-  attribution: "©<a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors | 「国土交通省国土政策局「国土数値情報（行政区域データ）」をもとに加工」"
+  attribution: '<i class="fa fa-copyright" aria-hidden="true"></i><a href="http://osm.org/copyright" target="_blank">OpenStreetMap<i class="fa fa-external-link" aria-hidden="true"></i></a> contributors | 国土交通省国土政策局「国土数値情報（行政区域データ）」'
 }).addTo(map);
 
 const saigai_densyo = './jsons/saigai_densyo.json'
