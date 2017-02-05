@@ -62,20 +62,22 @@ p {
   }
 }
 
-
+$pref-color: #18c224;
+$town-color: #2d5e06;
+$stroke-color: #2d5e06;
 
 /* SVG */
 .geo-feature {
   stroke-width:1;
   &.prefs {
-    fill: #18c224;
+    fill: $pref-color;
     fill-opacity: 0.3;
-    stroke: #2d5e06;
+    stroke: $stroke-color;
   }
 
   &.towns {
-    fill: #2d5e06;
+    fill: $town-color;
     fill-opacity: 0.4;
-    stroke: #2d5e06;
+    stroke: $stroke-color;
   }
 }
