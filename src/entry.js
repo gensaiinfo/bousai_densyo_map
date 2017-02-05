@@ -7,7 +7,7 @@ import "./index.scss";
 import L from 'leaflet';
 import * as d3 from 'd3'
 import * as topojson from 'topojson'
-const homePosition = {center:[35.3622222, 138.7313889],zoom:5,minZoom:5, maxZoom:9}
+const homePosition = {center:[35.3622222, 134.7313889],zoom:5,minZoom:5, maxZoom:9}
 const map = L.map('map', homePosition);
 
 L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
