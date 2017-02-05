@@ -75,8 +75,10 @@ function onEachFeatureFunc(disp){
     if (prop && prop.name) {
       let name = `[${prop.code6}] ${prop.pref}`
       if(prop.pref != prop.name) name = `${name} ${prop.name}`;
+      layer.bindTooltip(name);
       layer.bindPopup(name);
-      layer.on('click', ()=>{
+      layer.on('click', (e)=>{
+        map.fitBounds(e.target.getBounds());
         disp(prop.code6, name)
       })
     }
