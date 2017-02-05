@@ -137,12 +137,10 @@ function showMap(jsonFile, style, onEachFeature, filter){
 
 // HOME Controll
 const homeCtl = L.control({position: 'topleft'});
-homeCtl.onAdd = function(map) {
+homeCtl.onAdd = (map)=> {
   const div = L.DomUtil.create('div', ' home leaflet-control leaflet-bar')
   const a = L.DomUtil.create('a')
-  a.addEventListener('click', function(){
-    map.setView(homePosition.center, homePosition.zoom)
-  })
+  a.addEventListener('click', ()=> map.setView(homePosition.center, homePosition.zoom))
   a.href = '#'
   a.title = 'Move to Home position'
   a.innerHTML = '<i class="fa fa-home" aria-hidden="true"></i>'
