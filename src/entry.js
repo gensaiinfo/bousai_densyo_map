@@ -148,3 +148,35 @@ homeCtl.onAdd = (map)=> {
   return div;
 }
 homeCtl.addTo(map);
+
+/**
+ * 現在地の GPS座標に移動する
+ */
+function geolocation(){
+  if( navigator.geolocation ) {
+  	// 現在位置を取得できる場合の処理
+  	navigator.geolocation.getCurrentPosition(
+      (loc)=>{
+        const center = [loc.coords.latitude, loc.coords.longitude]
+        map.setView(center, homePosition.maxZoom)
+      },
+      (error)=> alert("位置情報の取得に失敗しました")) ;
+  } else {
+  	// 現在位置を取得できない場合
+  	alert( "あなたの端末では、現在位置を取得できません。" ) ;
+  }
+}
+
+// Current Position Controll
+const geoposiCtl = L.control({position: 'topleft'});
+geoposiCtl.onAdd = (map)=> {
+  const div = L.DomUtil.create('div', ' home leaflet-control leaflet-bar')
+  const a = L.DomUtil.create('a')
+  a.addEventListener('click', geolocation)
+  a.href = '#'
+  a.title = 'Move to your current position'
+  a.innerHTML = '<i class="fa fa-location-arrow" aria-hidden="true"></i>'
+  div.appendChild(a)
+  return div;
+}
+geoposiCtl.addTo(map);
