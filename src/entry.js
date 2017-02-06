@@ -2,7 +2,11 @@
 
 import "font_awesome_css"
 import "leaflet_css";
+import "japan_topojson"
+import "japan_prefs_topojson"
+import "saigai_densyo"
 import "./index.scss";
+import "./index.html"
 
 import L from 'leaflet';
 import * as d3 from 'd3'
