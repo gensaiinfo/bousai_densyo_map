@@ -79,7 +79,7 @@ function onEachFeatureFunc(disp){
     if (prop && prop.name) {
       let name = `[${prop.code6}] ${prop.pref}`
       if(prop.pref != prop.name) name = `${name} ${prop.name}`;
-      layer.bindTooltip(name);
+      if(!isMobile()){ layer.bindTooltip(name); }
       layer.bindPopup(name);
       layer.on('click', (e)=>{
         map.fitBounds(e.target.getBounds());
@@ -117,6 +117,10 @@ function dispFunc(densyo){
       const src = (d.source!='')? `<div class="src">(${d.source})</div>`: ''
       dd.innerHTML = d.meaning+ src;
       dlist.appendChild(dd);
+
+      if(isMobile()){
+        document.querySelector('#info').style.display='flex';
+      }
     }
   }
 }
@@ -184,3 +188,17 @@ geoposiCtl.onAdd = (map)=> {
   return div;
 }
 geoposiCtl.addTo(map);
+
+// Utility
+/**
+ * モバイルかどうかを判定する
+ * @return {Boolean} [description]
+ */
+function isMobile(){
+  const switchWidth = 960;
+  return document.documentElement.clientWidth < switchWidth
+}
+
+document.querySelector('#close-btn').addEventListener('click',()=>{
+  document.querySelector('#info').style.display='none';
+})
