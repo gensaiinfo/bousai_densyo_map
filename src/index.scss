@@ -1,4 +1,4 @@
-
+@charset "utf-8";
 html{
   height:100%;
 }
@@ -7,23 +7,8 @@ body{
   padding: 0;
   height: 100%;
 }
-#container {
-  margin: 0;
-  height: 100%;
-  display: flex;
-}
-#map{
-  height: 100%;
-  flex: 1;
-}
-#info {
-  width: 375px;
-  height: 100%;
-  margin: 0 10px 0 10px;
-}
 h1 {
   margin: 10px 0 0 0;
-  font-size: 150%;
 }
 h2 {
   margin: 10px 0 5px 0;
@@ -35,7 +20,6 @@ p {
 }
 #densyo{
   overflow: scroll;
-  height: 80%;
   dl {
     padding: 0;
     margin: 0;
@@ -54,6 +38,101 @@ p {
   }
 }
 
+$switchWidth: 960px;
+// for PC
+@media screen and (min-width:$switchWidth){
+  #container {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    header {
+      display: none;
+    }
+  }
+  #map{
+    height: 100%;
+    flex: 1;
+  }
+  #info {
+    width: 375px;
+    height: 100%;
+    margin: 0 10px 0 10px;
+    .close-btn {
+      display: none;
+    }
+    .content{
+      height: 100%;
+      h1 {
+        font-size: 150%;
+      }
+      #densyo {
+        height: 80%;
+      }
+    }
+  }
+}
+// for mobile
+@media screen and (max-width:$switchWidth){
+  .leaflet-control-container .leaflet-top {
+    top:100px;
+  }
+  #container {
+    margin: 0;
+    height: 100%;
+    header {
+      position: absolute;
+      z-index: 100000;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 0 15px 5px 15px;
+      color: white;
+      h1 {
+        font-size: 110%;
+      }
+      p {
+        font-size: small;
+      }
+      a {
+        color: rgb(33, 178, 187);
+      }
+    }
+  }
+  #map{
+    height: 100%;
+  }
+  #info {
+    display: none;
+    position: absolute;
+    top:0;
+    left: 0;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 100000;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    .content {
+      width:90%;
+      height: 90%;
+      padding: 10px;
+      background-color: white;
+      border-radius: 15px;
+      .close-btn {
+        position: absolute;
+        top:5%;
+        right:6%;
+      }
+      h1,p {
+        display: none;
+      }
+      #densyo {
+        height: 90%;
+      }
+    }
+  }
+}
+
 /* SVG */
 $pref-color: #18c224;
 $town-color: #2d5e06;
@@ -65,7 +144,6 @@ $stroke-color: #2d5e06;
     fill-opacity: 0.3;
     stroke: $stroke-color;
   }
-
   &.towns {
     fill: $town-color;
     fill-opacity: 0.3;
