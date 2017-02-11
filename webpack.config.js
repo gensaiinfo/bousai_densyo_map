@@ -44,6 +44,7 @@ module.exports = {
   devServer: {
     contentBase: __dirname + "/docs",
     compress: true,
+    host: '0.0.0.0',
     port: 9000
   }
 }
