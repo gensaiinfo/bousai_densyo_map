@@ -28,8 +28,8 @@ module.exports = {
           ]
         })
       },
-      {test: /\.(png|jpg)$/, loader: "file-loader?name=/images/[name].[ext]"},
-      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?name=/fonts/[name].[ext]"},
+      {test: /\.(png|jpg)$/, loader: "file-loader?name=images/[name].[ext]&publicPath=../"},
+      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?name=fonts/[name].[ext]&publicPath=../"},
       {test: /\.(json|topojson)?$/, loader: "file-loader?name=jsons/[name].[ext]"}
     ]
   },
