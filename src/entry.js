@@ -7,6 +7,18 @@ import "japan_prefs_topojson"
 import "saigai_densyo"
 import "./index.scss";
 import "./index.html"
+import "./manifest.json"
+import "./worker.js"
+
+import "chrome192"
+import "chrome384"
+import "apple_icon"
+import "favicon16"
+import "favicon32"
+import "favicon"
+import "browserconfig"
+import "safari_pinned"
+import "mstile"
 
 import L from 'leaflet';
 import * as d3 from 'd3'
@@ -202,3 +214,10 @@ function isMobile(){
 document.querySelector('#close-btn').addEventListener('click',()=>{
   document.querySelector('#info').style.display='none';
 })
+
+// Service Worker registraion
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('worker.js', { scope: '.' }).then(function(registraion) {
+    registraion.update();
+  });
+}

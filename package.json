@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "webpack-dev-server --hot --inline",
-    "browser": "wait-on http://localhost:9000 && opener http://localhost:9000",
+    "browser": "wait-on http://localhost:9000 && opener http://localhost:9000/bousai_densyo_map/",
     "start": "npm-run-all -p server browser",
     "genDataJson": "node lib/util.js"
   },
