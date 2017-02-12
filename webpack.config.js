@@ -1,12 +1,13 @@
 const webpack =  require('webpack') ;
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   context: __dirname + '/src',
   entry: {
-    javascript: "./entry.js"
+    bundle: "./entry.js"
   },
   output: {
     path: __dirname + "/docs",
-    filename: "bundle.js"
+    filename: "[name].js"
   },
   module: {
     rules: [
@@ -14,13 +15,21 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-        options: { presets: ["es2015"] }
+        options: { presets: [["es2015", {"loose": true, "modules": false}]] }
       },
       {test: /\.html$/, loader: "file-loader?name=[path][name].[ext]" },
-      {test: /\.css$/, loader: ["style-loader","css-loader"]},
-      {test: /\.scss$/, loader: ["style-loader","css-loader","sass-loader"]},
-      {test: /\.(png|jpg)$/, loader: "file-loader?name=images/[name].[ext]"},
-      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?name=fonts/[name].[ext]"},
+      {
+        test: /\.(css|scss)$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use:[
+            'css-loader',
+            'sass-loader'
+          ]
+        })
+      },
+      {test: /\.(png|jpg)$/, loader: "file-loader?name=/images/[name].[ext]"},
+      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?name=/fonts/[name].[ext]"},
       {test: /\.(json|topojson)?$/, loader: "file-loader?name=jsons/[name].[ext]"}
     ]
   },
@@ -39,6 +48,7 @@ module.exports = {
   },
   devtool: "source-map",
   plugins:[
+    new ExtractTextPlugin({ filename: 'styles/[name].css', disable: false, allChunks: true}),
     new webpack.optimize.UglifyJsPlugin()  // minify
   ],
   devServer: {
