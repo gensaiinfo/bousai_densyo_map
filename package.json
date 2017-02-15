@@ -1,6 +1,6 @@
 {
   "name": "saigai_densyo_map",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "災害に関わる「言い伝え」",
   "main": "index.js",
   "scripts": {
