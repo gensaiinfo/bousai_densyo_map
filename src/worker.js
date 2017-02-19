@@ -15,6 +15,7 @@ const PRECACHE_URLS = [
 ]
 
 self.addEventListener('install', (event)=>{
+  console.info("Installing Service Worker")
   event.waitUntil(
     caches.delete(MAP_CACHE).then(()=>{
       return precache()
