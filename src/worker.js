@@ -1,7 +1,6 @@
 'use strict'
 
 const CACHE = 'CACHE-V1'
-const MAP_CACHE = 'MAP_CACHE'
 const TIMEOUT=400;
 
 const PRECACHE_URLS = [
@@ -16,11 +15,7 @@ const PRECACHE_URLS = [
 
 self.addEventListener('install', (event)=>{
   console.info("Installing Service Worker")
-  event.waitUntil(
-    caches.delete(MAP_CACHE).then(()=>{
-      return precache()
-    })
-  )
+  event.waitUntil(precache())
 })
 
 self.addEventListener('fetch', (event)=>{
@@ -28,10 +23,6 @@ self.addEventListener('fetch', (event)=>{
   if(/bousai_densyo_map/.test(event.request.url)){
     event.respondWith(fromNetwork(event.request, TIMEOUT).catch(
       ()=>fromCache(CACHE, event.request)
-    ))
-  } else if(/tiles/.test(event.request.url)) {
-    event.respondWith(fromCache(MAP_CACHE, event.request).catch(
-      ()=>fetchNetThenCache(event.request)
     ))
   }
 })
@@ -73,21 +64,4 @@ function fromCache(cacheName, request) {
       return matching || Promise.reject('no-match');
     });
   });
-}
-
-/**
- * ネットワークから取得してキャッシュする。
- * タイルマップ用に使うので、タイムアウトは設定していない。
- * @param  [Request] request リクエスト
- * @return [Promise]
- */
-function fetchNetThenCache(request){
-  return new Promise((resolve, reject)=>{
-    caches.open(MAP_CACHE).then((cache)=>{
-      fetch(request,{mode: 'no-cors'}).then((response)=>{
-        cache.put(request, response.clone())
-        resolve(response);
-      }, reject);
-    })
-  })
 }
