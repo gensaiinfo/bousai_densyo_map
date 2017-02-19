@@ -20,7 +20,7 @@ import * as topojson from 'topojson'
 const homePosition = {center:[35.3622222, 134.7313889],zoom:5,minZoom:5, maxZoom:9}
 const map = L.map('map', homePosition);
 
-L.tileLayer('https://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
   attribution: '<i class="fa fa-copyright" aria-hidden="true"></i><a href="http://osm.org/copyright" target="_blank">OpenStreetMap<i class="fa fa-external-link" aria-hidden="true"></i></a> contributors | 国土交通省国土政策局「国土数値情報（行政区域データ）」'
 }).addTo(map);
 
@@ -85,7 +85,6 @@ function onEachFeatureFunc(disp){
     if (prop && prop.name) {
       let name = `[${prop.code6}] ${prop.pref}`
       if(prop.pref != prop.name) name = `${name} ${prop.name}`;
-      if(!isMobile()){ layer.bindTooltip(name); }
       layer.bindPopup(name);
       layer.on('click', (e)=>{
         map.fitBounds(e.target.getBounds());
