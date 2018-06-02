@@ -4,11 +4,6 @@
 
 'use strict'
 
-// Data
-import "japan_topojson"
-import "japan_prefs_topojson"
-import "saigai_densyo"
-
 import "./index.scss";
 import "./index.html"
 
