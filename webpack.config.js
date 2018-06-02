@@ -17,7 +17,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|worker.js)/,
         loader: "babel-loader",
-        options: { presets: [["es2015", {"loose": true, "modules": false}]] }
       },
       {test: /\.html$/, loader: "file-loader?name=[path][name].[ext]" },
       {
