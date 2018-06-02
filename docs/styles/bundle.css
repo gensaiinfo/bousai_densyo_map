@@ -117,6 +117,7 @@ p {
   .geo-feature:hover {
     fill-opacity: 0.6;
     stroke-width: 2px; }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -2449,6 +2450,7 @@ p {
   margin: 0;
   overflow: visible;
   clip: auto; }
+
 /* required styles */
 .leaflet-pane,
 .leaflet-tile,
@@ -2496,18 +2498,28 @@ p {
 .leaflet-container .leaflet-shadow-pane img,
 .leaflet-container .leaflet-tile-pane img,
 .leaflet-container img.leaflet-image-layer {
-  max-width: none !important; }
+  max-width: none !important;
+  max-height: none !important; }
 
 .leaflet-container.leaflet-touch-zoom {
   -ms-touch-action: pan-x pan-y;
   touch-action: pan-x pan-y; }
 
 .leaflet-container.leaflet-touch-drag {
-  -ms-touch-action: pinch-zoom; }
+  -ms-touch-action: pinch-zoom;
+  /* Fallback for FF which doesn't support pinch-zoom */
+  touch-action: none;
+  touch-action: pinch-zoom; }
 
 .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
   -ms-touch-action: none;
   touch-action: none; }
+
+.leaflet-container {
+  -webkit-tap-highlight-color: transparent; }
+
+.leaflet-container a {
+  -webkit-tap-highlight-color: rgba(51, 181, 229, 0.4); }
 
 .leaflet-tile {
   filter: inherit;
@@ -2748,20 +2760,22 @@ p {
   height: 30px;
   line-height: 30px; }
 
+.leaflet-touch .leaflet-bar a:first-child {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px; }
+
+.leaflet-touch .leaflet-bar a:last-child {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px; }
+
 /* zoom control */
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
   font: bold 18px 'Lucida Console', Monaco, monospace;
   text-indent: 1px; }
 
-.leaflet-control-zoom-out {
-  font-size: 20px; }
-
-.leaflet-touch .leaflet-control-zoom-in {
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
   font-size: 22px; }
-
-.leaflet-touch .leaflet-control-zoom-out {
-  font-size: 24px; }
 
 /* layers control */
 .leaflet-control-layers {
@@ -2797,6 +2811,7 @@ p {
 
 .leaflet-control-layers-scrollbar {
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-right: 5px; }
 
 .leaflet-control-layers-selector {
@@ -3038,5 +3053,6 @@ p {
   left: 0;
   margin-left: -12px;
   border-right-color: #fff; }
+
 
 /*# sourceMappingURL=bundle.css.map*/
