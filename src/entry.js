@@ -1,7 +1,6 @@
 'use strict'
 
 // static files
-import "./manifest.json"
 import "chrome192"
 import "chrome384"
 import "apple_icon"
