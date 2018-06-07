@@ -23,15 +23,12 @@ const saigai_densyo = './jsons/saigai_densyo.json'
 const japanTopojson = './jsons/japan.topojson'
 const japanPrefsTopojson = './jsons/japan_prefs.topojson'
 
-new Promise((resolve, reject)=>{
-  d3.json(saigai_densyo, (densyo)=>{
-    const disp = dispFunc(densyo)
-    resolve({
-      filter: filterFunc(densyo),
-      onEachFeature: onEachFeatureFunc(disp)
-    })
-  })
-}).then((funcs)=>{
+d3.json(saigai_densyo).then((densyo)=>{
+  const disp = dispFunc(densyo)
+  const funcs = {
+    filter: filterFunc(densyo),
+    onEachFeature: onEachFeatureFunc(disp)
+  }
   Promise.all([
     // 都道府県の描画
     showMap(japanPrefsTopojson,
@@ -134,7 +131,7 @@ function dispFunc(densyo){
  */
 function showMap(jsonFile, style, onEachFeature, filter){
   return new Promise((resolve, reject)=>{
-    d3.json(jsonFile, (topo)=>{
+    d3.json(jsonFile).then( (topo)=>{
       const layer = L.geoJson(
         topojson.feature(topo, topo.objects.japan),
         {style:style, onEachFeature:onEachFeature, filter: filter})
