@@ -20,7 +20,7 @@ const homePosition = {
 const map = L.map('map', homePosition);
 
 L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-  attribution: '<i class="fa fa-copyright" aria-hidden="true"></i><a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap<i class="fa fa-external-link" aria-hidden="true"></i></a> contributors | 国土交通省国土政策局「国土数値情報（行政区域データ）」',
+  attribution: '<i class="fa fa-copyright" aria-hidden="true"></i><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap<i class="fa fa-external-link" aria-hidden="true"></i></a> contributors | 国土交通省国土政策局「国土数値情報（行政区域データ）」',
 }).addTo(map);
 
 // Utility
