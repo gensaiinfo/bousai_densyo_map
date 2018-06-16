@@ -118,16 +118,13 @@ function dispFunc(densyo) {
  * @param  [Function] filter filer function
  * @return [Promise] resolve に leaflet layer オブジェクトを渡す
  */
-function showMap(jsonFile, style, onEachFeature, filter) {
-  return new Promise((resolve) => {
-    d3.json(jsonFile).then((topo) => {
-      const layer = L.geoJson(
-        topojson.feature(topo, topo.objects.japan),
-        { style, onEachFeature, filter },
-      );
-      resolve(layer);
-    });
-  });
+async function showMap(jsonFile, style, onEachFeature, filter) {
+  const topo = await d3.json(jsonFile);
+  const layer = await L.geoJson(
+    topojson.feature(topo, topo.objects.japan),
+    { style, onEachFeature, filter },
+  );
+  return layer;
 }
 
 // HOME Controll
@@ -185,13 +182,14 @@ const saigaiDensyo = './jsons/saigai_densyo.json';
 const japanTopojson = './jsons/japan.topojson';
 const japanPrefsTopojson = './jsons/japan_prefs.topojson';
 
-d3.json(saigaiDensyo).then((densyo) => {
+async function drowMap() {
+  const densyo = await d3.json(saigaiDensyo)
   const disp = dispFunc(densyo);
   const funcs = {
     filter: filterFunc(densyo),
     onEachFeature: onEachFeatureFunc(disp),
   };
-  Promise.all([
+  const layers = await Promise.all([
     // 都道府県の描画
     showMap(
       japanPrefsTopojson,
@@ -206,10 +204,10 @@ d3.json(saigaiDensyo).then((densyo) => {
       funcs.onEachFeature,
       funcs.filter,
     ),
-  ]).then((layers) => {
-    layers.forEach((layer) => { layer.addTo(map); });
-  });
-});
+  ]);
+  layers.forEach((layer) => { layer.addTo(map); });
+}
+drowMap();
 
 document.querySelector('#close-btn').addEventListener('click', () => {
   document.querySelector('#info').style.display = 'none';
