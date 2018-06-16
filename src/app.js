@@ -155,10 +155,14 @@ function geolocation() {
         const center = [loc.coords.latitude, loc.coords.longitude];
         map.setView(center, homePosition.maxZoom);
       },
-      (error) => { alert(`位置情報の取得に失敗しました。${error}`); },
+      (error) => {
+        // eslint-disable-next-line no-alert
+        alert(`位置情報の取得に失敗しました。${error}`);
+      },
     );
   } else {
     // 現在位置を取得できない場合
+    // eslint-disable-next-line no-alert
     alert('あなたの端末では、現在位置を取得できません。');
   }
 }
