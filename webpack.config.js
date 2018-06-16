@@ -51,10 +51,12 @@ module.exports = {
   devServer: {
     contentBase: `${__dirname}/docs`,
     compress: true,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 9000,
-    hot: true,
+    // hot: true,
+    inline: true,
     open: true,
     publicPath: '/bousai_densyo_map/',
+    openPage: 'bousai_densyo_map/',
   },
 };
