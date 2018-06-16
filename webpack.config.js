@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
@@ -22,7 +23,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|worker.js)/,
+        exclude: /node_modules/,
         loader: 'babel-loader',
       },
       { test: /\.html$/, loader: 'html-loader' },
@@ -32,7 +33,6 @@ module.exports = {
       },
       { test: /\.(png|jpg)$/, exclude: /icons/, loader: 'file-loader?name=images/[name].[ext]&publicPath=../' },
       { test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?name=fonts/[name].[ext]&publicPath=../' },
-      { test: /.*worker.js/, loader: 'file-loader?name=[name].[ext]' },
       { test: /icons\/.+.(png|svg|xml|ico)/, loader: 'file-loader?name=icons/[name].[ext]' },
     ],
   },
@@ -57,6 +57,10 @@ module.exports = {
     ]),
     new HtmlWebpackPlugin({
       template: 'index.html',
+    }),
+    new WorkboxPlugin.GenerateSW({
+      swDest: 'sw.js',
+      cacheId: 'densyo',
     }),
   ],
   serve: {
