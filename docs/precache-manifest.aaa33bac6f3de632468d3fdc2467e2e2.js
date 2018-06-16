@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "icons/browserconfig.xml"
   },
   {
-    "revision": "66289f59db87e14002e99808c5db33a4",
+    "revision": "194b8e270b9301661285add78a61f931",
     "url": "index.html"
   },
   {
@@ -60,12 +60,12 @@ self.__precacheManifest = [
     "url": "images/marker-icon.png"
   },
   {
-    "revision": "1423a5aa1cf4c1cf109e713c3e277303",
-    "url": "icons/favicon.ico"
-  },
-  {
     "revision": "70d73b65292f4ddede82d86efa366df6",
     "url": "icons/safari-pinned-tab.svg"
+  },
+  {
+    "revision": "1423a5aa1cf4c1cf109e713c3e277303",
+    "url": "icons/favicon.ico"
   },
   {
     "revision": "af7ae505a9eed503f8b8e6982036873e",
