@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
@@ -24,7 +25,7 @@ module.exports = {
         exclude: /(node_modules|worker.js)/,
         loader: 'babel-loader',
       },
-      { test: /\.html$/, loader: 'file-loader?name=[path][name].[ext]' },
+      { test: /\.html$/, loader: 'html-loader' },
       {
         test: /\.(css|scss)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
@@ -54,6 +55,9 @@ module.exports = {
       { from: 'icons/*.xml', to: './', context: '../' },
       { from: 'icons/*.svg', to: './', context: '../' },
     ]),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
   ],
   serve: {
     content: `${__dirname}/docs`,
