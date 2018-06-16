@@ -9,7 +9,6 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson';
 
 import './index.scss';
-import './index.html';
 
 const homePosition = {
   center: [35.3622222, 134.7313889],
@@ -183,7 +182,7 @@ const japanTopojson = './jsons/japan.topojson';
 const japanPrefsTopojson = './jsons/japan_prefs.topojson';
 
 async function drowMap() {
-  const densyo = await d3.json(saigaiDensyo)
+  const densyo = await d3.json(saigaiDensyo);
   const disp = dispFunc(densyo);
   const funcs = {
     filter: filterFunc(densyo),
