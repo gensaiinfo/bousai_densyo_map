@@ -1,7 +1,9 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   context: `${__dirname}/src`,
   entry: {
     bundle: './entry.js',
@@ -10,7 +12,12 @@ module.exports = {
     path: `${__dirname}/docs`,
     filename: '[name].js',
   },
-  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'initial',
+    },
+  },
   module: {
     rules: [
       {
@@ -18,7 +25,7 @@ module.exports = {
         exclude: /(node_modules|worker.js)/,
         loader: 'babel-loader',
       },
-      { test: /\.html$/, loader: 'file-loader?name=[path][name].[ext]' },
+      { test: /\.html$/, loader: 'html-loader' },
       {
         test: /\.(css|scss)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
@@ -36,7 +43,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'styles/[name].css',
-      chunkFilename: 'styles/[id].css',
+      chunkFilename: 'styles/[name].css',
     }),
     new CopyWebpackPlugin([
       { from: 'manifest.json', to: 'manifest.json' },
@@ -48,6 +55,9 @@ module.exports = {
       { from: 'icons/*.xml', to: './', context: '../' },
       { from: 'icons/*.svg', to: './', context: '../' },
     ]),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
   ],
   serve: {
     content: `${__dirname}/docs`,
