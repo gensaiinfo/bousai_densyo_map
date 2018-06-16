@@ -44,28 +44,28 @@ self.__precacheManifest = [
     "url": "fonts/fontawesome-webfont.woff"
   },
   {
-    "revision": "4f0283c6ce28e888000e978e537a6a56",
-    "url": "images/layers-2x.png"
+    "revision": "2e5fc02cf2517b3adb59ee375b2a8c0e",
+    "url": "icons/android-chrome-384x384.png"
   },
   {
     "revision": "26b3385b07818e0a15d025004819fff4",
     "url": "icons/favicon-16x16.png"
   },
   {
-    "revision": "b89578b5c73806126b986c2562a1e0ff",
-    "url": "icons/android-chrome-512x512.png"
+    "revision": "4f0283c6ce28e888000e978e537a6a56",
+    "url": "images/layers-2x.png"
   },
   {
     "revision": "2273e3d8ad9264b7daa5bdbf8e6b47f8",
     "url": "images/marker-icon.png"
   },
   {
-    "revision": "70d73b65292f4ddede82d86efa366df6",
-    "url": "icons/safari-pinned-tab.svg"
-  },
-  {
     "revision": "1423a5aa1cf4c1cf109e713c3e277303",
     "url": "icons/favicon.ico"
+  },
+  {
+    "revision": "70d73b65292f4ddede82d86efa366df6",
+    "url": "icons/safari-pinned-tab.svg"
   },
   {
     "revision": "af7ae505a9eed503f8b8e6982036873e",
@@ -80,8 +80,8 @@ self.__precacheManifest = [
     "url": "icons/android-chrome-192x192.png"
   },
   {
-    "revision": "2e5fc02cf2517b3adb59ee375b2a8c0e",
-    "url": "icons/android-chrome-384x384.png"
+    "revision": "b89578b5c73806126b986c2562a1e0ff",
+    "url": "icons/android-chrome-512x512.png"
   },
   {
     "revision": "a6137456ed160d7606981aa57c559898",
