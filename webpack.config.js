@@ -10,6 +10,7 @@ module.exports = {
     path: `${__dirname}/docs`,
     filename: '[name].js',
   },
+  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   module: {
     rules: [
       {
@@ -48,13 +49,18 @@ module.exports = {
       { from: 'icons/*.svg', to: './', context: '../' },
     ]),
   ],
-  devServer: {
-    contentBase: `${__dirname}/docs`,
+  serve: {
+    content: `${__dirname}/docs`,
     compress: true,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 9000,
-    hot: true,
-    open: true,
-    publicPath: '/bousai_densyo_map/',
+    dev: { publicPath: '/bousai_densyo_map/' },
+    open: {
+      path: '/bousai_densyo_map/',
+    },
+    hot: {
+      host: 'localhost',
+      port: 9010,
+    },
   },
 };
