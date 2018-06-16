@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
   context: `${__dirname}/src`,
   entry: {
     bundle: './entry.js',
@@ -10,7 +11,12 @@ module.exports = {
     path: `${__dirname}/docs`,
     filename: '[name].js',
   },
-  mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'initial',
+    },
+  },
   module: {
     rules: [
       {
@@ -36,7 +42,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'styles/[name].css',
-      chunkFilename: 'styles/[id].css',
+      chunkFilename: 'styles/[name].css',
     }),
     new CopyWebpackPlugin([
       { from: 'manifest.json', to: 'manifest.json' },
