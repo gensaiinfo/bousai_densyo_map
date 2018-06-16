@@ -1,11 +1,12 @@
 {
   "name": "saigai_densyo_map",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "災害に関わる「言い伝え」",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-serve --config ./webpack.config.js",
+    "rebuild": "rm -rf ./docs && ./node_modules/.bin/webpack --mode production",
+    "start": "./node_modules/.bin/webpack-serve --config ./webpack.config.js",
     "genDataJson": "node lib/util.js"
   },
   "author": "HeRoMo",
