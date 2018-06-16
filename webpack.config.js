@@ -56,7 +56,11 @@ module.exports = {
     port: 9000,
     dev: { publicPath: '/bousai_densyo_map/' },
     open: {
-      path: 'bousai_densyo_map/',
+      path: '/bousai_densyo_map/',
+    },
+    hot: {
+      host: 'localhost',
+      port: 9010,
     },
   },
 };
