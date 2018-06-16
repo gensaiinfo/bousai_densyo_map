@@ -9,7 +9,6 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson';
 
 import './index.scss';
-import './index.html';
 
 const homePosition = {
   center: [35.3622222, 134.7313889],
@@ -118,16 +117,13 @@ function dispFunc(densyo) {
  * @param  [Function] filter filer function
  * @return [Promise] resolve に leaflet layer オブジェクトを渡す
  */
-function showMap(jsonFile, style, onEachFeature, filter) {
-  return new Promise((resolve) => {
-    d3.json(jsonFile).then((topo) => {
-      const layer = L.geoJson(
-        topojson.feature(topo, topo.objects.japan),
-        { style, onEachFeature, filter },
-      );
-      resolve(layer);
-    });
-  });
+async function showMap(jsonFile, style, onEachFeature, filter) {
+  const topo = await d3.json(jsonFile);
+  const layer = await L.geoJson(
+    topojson.feature(topo, topo.objects.japan),
+    { style, onEachFeature, filter },
+  );
+  return layer;
 }
 
 // HOME Controll
@@ -155,10 +151,14 @@ function geolocation() {
         const center = [loc.coords.latitude, loc.coords.longitude];
         map.setView(center, homePosition.maxZoom);
       },
-      (error) => { alert(`位置情報の取得に失敗しました。${error}`); },
+      (error) => {
+        // eslint-disable-next-line no-alert
+        alert(`位置情報の取得に失敗しました。${error}`);
+      },
     );
   } else {
     // 現在位置を取得できない場合
+    // eslint-disable-next-line no-alert
     alert('あなたの端末では、現在位置を取得できません。');
   }
 }
@@ -181,13 +181,14 @@ const saigaiDensyo = './jsons/saigai_densyo.json';
 const japanTopojson = './jsons/japan.topojson';
 const japanPrefsTopojson = './jsons/japan_prefs.topojson';
 
-d3.json(saigaiDensyo).then((densyo) => {
+async function drowMap() {
+  const densyo = await d3.json(saigaiDensyo);
   const disp = dispFunc(densyo);
   const funcs = {
     filter: filterFunc(densyo),
     onEachFeature: onEachFeatureFunc(disp),
   };
-  Promise.all([
+  const layers = await Promise.all([
     // 都道府県の描画
     showMap(
       japanPrefsTopojson,
@@ -202,10 +203,10 @@ d3.json(saigaiDensyo).then((densyo) => {
       funcs.onEachFeature,
       funcs.filter,
     ),
-  ]).then((layers) => {
-    layers.forEach((layer) => { layer.addTo(map); });
-  });
-});
+  ]);
+  layers.forEach((layer) => { layer.addTo(map); });
+}
+drowMap();
 
 document.querySelector('#close-btn').addEventListener('click', () => {
   document.querySelector('#info').style.display = 'none';
