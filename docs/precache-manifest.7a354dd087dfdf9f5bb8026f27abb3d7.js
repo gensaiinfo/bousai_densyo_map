@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "26b3385b07818e0a15d025004819fff4",
-    "url": "icons/favicon-16x16.png"
+    "revision": "a709661aab348aea240205e592a4a939",
+    "url": "icons/favicon-32x32.png"
   },
   {
-    "revision": "868ca4f0d8873fd82194",
+    "revision": "535ccfbd6b2188d3f650",
     "url": "styles/vendor.css"
   },
   {
-    "revision": "868ca4f0d8873fd82194",
+    "revision": "535ccfbd6b2188d3f650",
     "url": "vendor.js"
   },
   {
-    "revision": "70d73b65292f4ddede82d86efa366df6",
-    "url": "icons/safari-pinned-tab.svg"
+    "revision": "0a51888de19012ab930a465eaebd68ec",
+    "url": "icons/browserconfig.xml"
   },
   {
     "revision": "66289f59db87e14002e99808c5db33a4",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "jsons/japan_prefs.topojson"
   },
   {
-    "revision": "beb36196055d4076cb5d",
+    "revision": "1180de15360588e76bb6",
     "url": "styles/bundle.css"
   },
   {
@@ -48,8 +48,8 @@ self.__precacheManifest = [
     "url": "images/layers-2x.png"
   },
   {
-    "revision": "a709661aab348aea240205e592a4a939",
-    "url": "icons/favicon-32x32.png"
+    "revision": "26b3385b07818e0a15d025004819fff4",
+    "url": "icons/favicon-16x16.png"
   },
   {
     "revision": "b89578b5c73806126b986c2562a1e0ff",
@@ -60,12 +60,12 @@ self.__precacheManifest = [
     "url": "images/marker-icon.png"
   },
   {
-    "revision": "0a51888de19012ab930a465eaebd68ec",
-    "url": "icons/browserconfig.xml"
-  },
-  {
     "revision": "1423a5aa1cf4c1cf109e713c3e277303",
     "url": "icons/favicon.ico"
+  },
+  {
+    "revision": "70d73b65292f4ddede82d86efa366df6",
+    "url": "icons/safari-pinned-tab.svg"
   },
   {
     "revision": "af7ae505a9eed503f8b8e6982036873e",
@@ -100,7 +100,7 @@ self.__precacheManifest = [
     "url": "fonts/fontawesome-webfont.eot"
   },
   {
-    "revision": "beb36196055d4076cb5d",
+    "revision": "1180de15360588e76bb6",
     "url": "bundle.js"
   }
 ];
