@@ -1,7 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 module.exports = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
@@ -58,9 +58,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),
-    new WorkboxPlugin.GenerateSW({
+    new GenerateSW({
       swDest: 'sw.js',
       cacheId: 'densyo',
+      clientsClaim: true,
+      skipWaiting: true,
+      directoryIndex: 'index.html',
     }),
   ],
   serve: {
