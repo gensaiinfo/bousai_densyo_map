@@ -19,6 +19,9 @@ importScripts(
 
 workbox.core.setCacheNameDetails({prefix: "densyo"});
 
+workbox.skipWaiting();
+workbox.clientsClaim();
+
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
  * requests for URLs in the manifest.
@@ -26,4 +29,6 @@ workbox.core.setCacheNameDetails({prefix: "densyo"});
  */
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {
+  "directoryIndex": "index.html"
+});
